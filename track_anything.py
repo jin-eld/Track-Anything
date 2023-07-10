@@ -6,7 +6,7 @@ from tracker.base_tracker import BaseTracker
 from inpainter.base_inpainter import BaseInpainter
 import numpy as np
 import argparse
-
+import torch
 
 
 class TrackingAnything():
@@ -61,12 +61,15 @@ class TrackingAnything():
         
 def parse_augment():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--device', type=str, default="cuda:0")
+    parser.add_argument('--device', type=str, default="auto", help="prefer cuda, otherwise fall back to cpu")
     parser.add_argument('--sam_model_type', type=str, default="vit_h")
-    parser.add_argument('--port', type=int, default=6080, help="only useful when running gradio applications")  
+    parser.add_argument('--port', type=int, default=6080, help="only useful when running gradio applications")
     parser.add_argument('--debug', action="store_true")
     parser.add_argument('--mask_save', default=False)
     args = parser.parse_args()
+
+    if args.device == "auto":
+        args.device = "cuda" if torch.cuda.is_available() else "cpu"
 
     if args.debug:
         print(args)
