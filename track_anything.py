@@ -89,8 +89,3 @@ if __name__ == "__main__":
     mask[0,0]= 1
     trackany = TrackingAnything('/ssd1/gaomingqi/checkpoints/sam_vit_h_4b8939.pth','/ssd1/gaomingqi/checkpoints/XMem-s012.pth', args)
     masks, logits ,painted_images= trackany.generator(images, mask)
-        
-        
-    
-    
-    
